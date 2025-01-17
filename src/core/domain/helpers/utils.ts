@@ -4,9 +4,9 @@ export function invariant(condition: boolean, error: Error): void {
   }
 }
 export function isEmpty(obj: unknown): boolean {
-  if (obj == null) return true; // Nếu là null hoặc undefined
+  if (obj == null) return true;
   if (typeof obj === "object") {
-    return Object.keys(obj).length === 0; // Kiểm tra đối tượng rỗng
+    return Object.keys(obj).length === 0;
   }
-  return !obj; // Kiểm tra chuỗi rỗng, số 0, false, NaN
+  return !obj;
 }
