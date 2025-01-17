@@ -1,14 +1,16 @@
-import { UniqueEntityID } from "../../../../domain/entities/unique-entity";
-import { Mapper } from "../../../../infra-base/mapper.base";
+import { UniqueEntityID } from "../../../../core/domain/entities/unique-entity";
+import { Mapper } from "../../../../core/infra-base/mapper.base";
 import { DappEntity } from "../../domain/entities/dapp.entity";
-import { DappProps, DappType } from "../../domain/entities/dapp.type";
+import { DappDomain, DappResponse } from "../../domain/entities/dapp.type";
 
-export class DappMapper implements Mapper<DappEntity, DappProps> {
-  toPersistence(entity: DappEntity): DappProps {
+export class DappMapper
+  implements Mapper<DappEntity, DappDomain, DappResponse>
+{
+  toPersistence(entity: DappEntity): DappDomain {
     const clone = entity.getProps();
     return clone;
   }
-  toDomain(record: DappProps): DappEntity {
+  toDomain(record: DappDomain): DappEntity {
     return new DappEntity({
       id: new UniqueEntityID(record.id),
       props: {
@@ -21,16 +23,10 @@ export class DappMapper implements Mapper<DappEntity, DappProps> {
     });
   }
 
-  toResponse(entity: DappEntity): {
-    id: string | number;
-    type: DappType;
-    name: string;
-    logo: string;
-    url: string;
-  } {
+  toResponse(entity: DappEntity): DappResponse {
     const props = entity.getProps();
     return {
-      id: entity.id.toValue(),
+      id: Number(entity.id.toValue()), // Ép kiểu thành number.
       type: props.type,
       name: props.name,
       logo: props.logo,

@@ -1,11 +1,11 @@
-import { AggregateRoot } from "../../../../domain/entities/aggregate.base";
-import { UniqueEntityID } from "../../../../domain/entities/unique-entity";
-import { type DappProps } from "./dapp.type";
+import { AggregateRoot } from "../../../../core/domain/entities/aggregate.base";
+import { UniqueEntityID } from "../../../../core/domain/entities/unique-entity";
+import { type DappDomain } from "./dapp.type";
 
-export class DappEntity extends AggregateRoot<DappProps> {
-  static create(createProps: DappProps) {
+export class DappEntity extends AggregateRoot<DappDomain> {
+  static create(createProps: DappDomain) {
     const id = new UniqueEntityID();
-    const props: DappProps = { ...createProps };
+    const props: DappDomain = { ...createProps };
     const user = new DappEntity({ id, props });
 
     console.log("Create dapp id:", id.toValue());
