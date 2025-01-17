@@ -1,9 +1,10 @@
-import { invariant, isEmpty } from "../../../utils";
 import {
   ArgumentInvalidException,
   ArgumentNotProvidedException,
   ArgumentOutOfRangeException,
 } from "../exceptions/exceptions";
+import { invariant } from "../helpers/invariant";
+import { isEmpty } from "../helpers/utils";
 import { UniqueEntityID } from "./unique-entity";
 
 interface BaseEntityProps {

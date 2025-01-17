@@ -1,7 +1,7 @@
 import { Entity } from "../entities/entity.base";
 import { ValueObject } from "../entities/value-object.base";
 
-function isEntity(obj: unknown): obj is Entity<unknown> {
+export function isEntity(obj: unknown): obj is Entity<unknown> {
   /**
    * 'instanceof Entity' causes error here for some reason.
    * Probably creates some circular dependency. This is a workaround

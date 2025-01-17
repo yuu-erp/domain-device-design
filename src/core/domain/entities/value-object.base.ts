@@ -1,5 +1,6 @@
-import { invariant, isEmpty } from "../../utils";
 import { ArgumentNotProvidedException } from "../exceptions/exceptions";
+import { invariant } from "../helpers/invariant";
+import { isEmpty } from "../helpers/utils";
 
 /**
  * Domain Primitive is an object that contains only a single value
