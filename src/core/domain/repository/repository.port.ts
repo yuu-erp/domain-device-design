@@ -6,7 +6,7 @@ export interface RepositoryPort<Entity> {
   findAll(): Promise<Entity[]>;
   existsById(id: string): Promise<boolean>;
 
-  save(entity: Entity): Promise<void> | Promise<Entity>;
+  save(entity: Entity): Promise<Entity>;
 
   delete(entity: Entity): Promise<boolean>;
   deleteById(id: string): Promise<boolean>;
