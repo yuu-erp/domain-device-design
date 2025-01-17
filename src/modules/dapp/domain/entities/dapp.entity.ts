@@ -1,5 +1,5 @@
-import { AggregateRoot } from "../../../domain/entities/aggregate.base";
-import { UniqueEntityID } from "../../../domain/entities/unique-entity";
+import { AggregateRoot } from "../../../../domain/entities/aggregate.base";
+import { UniqueEntityID } from "../../../../domain/entities/unique-entity";
 import { type DappProps } from "./dapp.type";
 
 export class DappEntity extends AggregateRoot<DappProps> {

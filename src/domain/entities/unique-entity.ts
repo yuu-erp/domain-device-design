@@ -7,8 +7,8 @@ export class UniqueEntityID {
   protected readonly id: EntityId;
 
   constructor(
-    private readonly idGenerator?: IdGenerator<EntityId>,
-    _id?: EntityId
+    _id?: EntityId,
+    private readonly idGenerator?: IdGenerator<EntityId>
   ) {
     this.id = _id || this.generateUniqueId();
   }

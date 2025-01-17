@@ -1,4 +1,5 @@
 export interface DappProps {
+  id: number;
   type: DappType;
   name: string;
   logo: string;
