@@ -23,8 +23,10 @@ export class DappRepositoryImpl implements IDappRepository {
     throw new Error("existsById Not implemented");
   }
 
-  save(_entity: DappEntity): Promise<DappEntity> {
-    throw new Error("save Not implemented");
+  async save(entity: DappEntity): Promise<DappEntity> {
+    const id = entity.id.toValue();
+    this.storage.setItem(id as string, entity);
+    return entity;
   }
 
   delete(_entity: DappEntity): Promise<boolean> {

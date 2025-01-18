@@ -1,4 +1,4 @@
-import { GenerateRandomString } from "../../infra-base/generateId/generateRandomString";
+import { GenerateRandomString } from "../infra-base/generateId/generateRandomString";
 
 /**
  * You just increase the length if necessary to improve performance
