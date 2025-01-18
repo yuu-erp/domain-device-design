@@ -1,4 +1,4 @@
-import { generatePrefixId } from "../helpers/ids";
+import { generatePrefixId } from "../../helpers/ids";
 import { IdGenerator } from "../interfaces/id-generator.interface";
 
 export type EntityId = number | string;

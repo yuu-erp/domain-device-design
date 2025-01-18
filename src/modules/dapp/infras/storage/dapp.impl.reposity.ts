@@ -1,9 +1,14 @@
-import { StoragePort } from "../../../../core/domain/repository/storage.port";
+import { ArgumentNotProvidedException } from "../../../../core/exceptions/exceptions.ts";
+import { StoragePort } from "../../../../core/domain/repository/storage.port.ts";
 import { DappEntity } from "../../domain/entities/dapp.entity";
 import { IDappRepository } from "../../domain/repository/dapp.repository";
 
 export class DappRepositoryImpl implements IDappRepository {
-  constructor(private readonly storage: StoragePort) {}
+  constructor(private readonly storage: StoragePort) {
+    if (!this.storage) {
+      throw new ArgumentNotProvidedException('"storage" not found!');
+    }
+  }
 
   findById(_id: string): Promise<DappEntity | null> {
     throw new Error("findById Not implemented");
