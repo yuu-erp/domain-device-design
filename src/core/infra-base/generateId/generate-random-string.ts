@@ -1,4 +1,4 @@
-import { IdGenerator } from "../../domain/interfaces/id-generator.interface";
+import { IdGenerator } from "src/core/domain/interfaces/id-generator.interface";
 
 export class GenerateRandomString implements IdGenerator<string> {
   private characters: string;

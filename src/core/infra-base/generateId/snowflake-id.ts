@@ -1,4 +1,4 @@
-import { IdGenerator } from "../../domain/interfaces/id-generator.interface";
+import { IdGenerator } from "src/core/domain/interfaces/id-generator.interface";
 
 export class SnowflakeID implements IdGenerator<string> {
   private epoch: bigint; // Mốc thời gian gốc

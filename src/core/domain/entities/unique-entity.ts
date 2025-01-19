@@ -1,7 +1,7 @@
-import { generatePrefixId } from "../../helpers/ids";
-import { IdGenerator } from "../interfaces/id-generator.interface";
+import { generatePrefixId } from "src/core/helpers/ids";
+import { IdGenerator } from "src/core/domain/interfaces/id-generator.interface";
 
-export type EntityId = number | string;
+export type EntityId = string;
 
 export class UniqueEntityID {
   protected readonly id: EntityId;

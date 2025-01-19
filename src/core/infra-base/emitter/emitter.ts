@@ -1,4 +1,3 @@
-// event-emitter.ts
 export class Emitter {
   private events: Record<string, Function[]> = {};
 
@@ -15,7 +14,6 @@ export class Emitter {
     }
   }
 
-  // Phát sự kiện bất đồng bộ nếu cần
   async emitAsync(event: string, ...args: any[]): Promise<void> {
     if (this.events[event]) {
       await Promise.all(

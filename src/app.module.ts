@@ -1,79 +1,49 @@
-import { Module } from "./core/domain/repository/module.port";
-import { StoragePort } from "./core/domain/repository/storage.port";
-import { DappController } from "./modules/dapp/application/dapp.controller";
-import { DappType } from "./modules/dapp/domain/entities/dapp.type";
-import { IDappRepository } from "./modules/dapp/domain/repository/dapp.repository";
-import { CreateDappInteractor } from "./modules/dapp/domain/use-cases/interactors/create-dapp.interactor";
-import { DeleteDappInteractor } from "./modules/dapp/domain/use-cases/interactors/delete-dapp.interactor"; // Giả sử bạn có DeleteDappInteractor
-import { DappRepositoryImpl } from "./modules/dapp/infras/storage/dapp.impl.reposity";
-import { StorageController } from "./modules/storage/application/storage.controller";
+import { LoggerService } from "./core/application/service/logger.service";
+import { DappEntity } from "./core/domain/entities/dapp.entity";
+import { DappCreatedDomainEvent } from "./core/domain/events/dapp-create.event";
+import { Emitter } from "./core/infra-base/emitter/emitter";
 
-export class AppModule extends Module {
+export class AppModule {
   constructor() {
-    super();
     console.time("Time run application");
     console.log("AppModule dependencies initialized...");
     this.configureDependencies();
     console.timeEnd("Time run application");
   }
 
-  configureDependencies() {
-    // Register StorageController
-    this.iocContainer.register(
-      "StorageController",
-      () => new StorageController(),
-      true
-    );
-
-    // Register DappRepositoryImpl with StorageController as a dependency
-    this.iocContainer.register(
-      "DappRepositoryImpl",
-      () =>
-        new DappRepositoryImpl(
-          this.iocContainer.resolve<StoragePort>("StorageController")
-        )
-    );
-
-    // Register CreateDappInteractor
-    this.iocContainer.register(
-      "createDappInPort",
-      () =>
-        new CreateDappInteractor(
-          this.iocContainer.resolve<IDappRepository>("DappRepositoryImpl")
-        )
-    );
-
-    // Register DeleteDappInteractor (chỉnh sửa ở đây, không phải CreateDappInteractor)
-    this.iocContainer.register(
-      "deleteDappInPort",
-      () =>
-        new DeleteDappInteractor( // Sử dụng DeleteDappInteractor thay vì CreateDappInteractor
-          this.iocContainer.resolve<IDappRepository>("DappRepositoryImpl")
-        )
-    );
-
-    // Register DappController with its dependencies
-    this.iocContainer.register(
-      "DappController",
-      () =>
-        new DappController(
-          this.iocContainer.resolve<CreateDappInteractor>("createDappInPort"), // Chắc chắn sử dụng đúng Interactor
-          this.iocContainer.resolve<DeleteDappInteractor>("deleteDappInPort") // Chắc chắn sử dụng đúng Interactor
-        )
-    );
-  }
+  configureDependencies() {}
 
   public async init(): Promise<void> {
     try {
-      const dappController =
-        this.iocContainer.resolve<DappController>("DappController");
-      const dapp = await dappController.createDapp({
-        name: "Lê Khải Hoàn",
-        logo: "",
-        type: DappType.FRAME,
-        url: "",
-      });
+      // Tạo instance của logger và emitter
+      const logger = new LoggerService(); // Giả sử bạn đã cài đặt LoggerPort
+      const emitter = new Emitter(); // Giả sử bạn đã cài đặt Emitter
+      emitter.on(
+        "DappCreatedDomainEvent",
+        async (event: DappCreatedDomainEvent) => {
+          // Xử lý sự kiện khi Dapp được tạo
+          console.log("DappCreatedDomainEvent received:", event);
+          console.log(`Dapp Created: ${event.name}, URL: ${event.url}`);
+        }
+      );
+      // Các thuộc tính tạo Dapp
+      const dappProps = {
+        id: 1,
+        name: "My DApp",
+        logo: "url_to_logo.png",
+        url: "https://mydapp.com",
+        type: 1, // Giả sử DappType là một enum hoặc string
+      };
+
+      // Tạo DappEntity mới
+      const dapp = DappEntity.create(dappProps, logger, emitter);
+
+      // Sau khi tạo, bạn có thể kiểm tra các sự kiện của thực thể DappEntity
+      console.log(dapp.domainEvents); // In ra các sự kiện đã được thêm vào
+
       console.log("Application initialized successfully.", dapp);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

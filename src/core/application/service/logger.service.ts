@@ -1,4 +1,4 @@
-import { LoggerPort } from "../../infra-base/logger/logger.port";
+import { LoggerPort } from "src/core/infra-base/logger/logger.port";
 
 export class LoggerService implements LoggerPort {
   log(message: string, ...meta: unknown[]): void {

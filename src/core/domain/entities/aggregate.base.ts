@@ -1,17 +1,17 @@
-import { Emitter } from "../../infra-base/emitter/emitter";
-import { LoggerPort } from "../../infra-base/logger/logger.port";
+import { Emitter } from "src/core/infra-base/emitter/emitter";
+import { LoggerPort } from "src/core/infra-base/logger/logger.port";
 import { DomainEvent } from "../events/domain-event.base";
 import { Entity } from "./entity.base";
 
 export abstract class AggregateRoot<Props> extends Entity<Props> {
-  private domainEvents: DomainEvent[] = [];
+  #domainEvents: DomainEvent[] = [];
 
-  get domainEventsList(): DomainEvent[] {
-    return this.domainEvents;
+  get domainEvents() {
+    return this.#domainEvents;
   }
 
-  set domainEventsList(domainEvents: DomainEvent[]) {
-    this.domainEvents = domainEvents;
+  set domainEvents(domainEvents: DomainEvent[]) {
+    this.#domainEvents = domainEvents;
   }
 
   protected addEvent(domainEvent: DomainEvent | DomainEvent[]): void {
@@ -26,7 +26,7 @@ export abstract class AggregateRoot<Props> extends Entity<Props> {
     this.domainEvents = [];
   }
 
-  async publishEvents(logger: LoggerPort, emitter: Emitter): Promise<void> {
+  async publishEvents(logger: LoggerPort, emitter: Emitter) {
     const promiseEvents = this.domainEvents.map((event) => {
       logger.debug(
         `[RequestID] "${event.constructor.name}" event published for aggregate ${this.constructor.name} : ${this.id}`
