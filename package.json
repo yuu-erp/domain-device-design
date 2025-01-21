@@ -14,7 +14,11 @@
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
-    "vite": "^6.0.5",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite": "^6.0.5"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "uid": "^2.0.2",
+    "util": "^0.12.5"
   }
 }
